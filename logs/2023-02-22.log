@@ -1,0 +1,11 @@
+An example of the log file:
+[2023-02-22] File already exist
+[2023-02-22] Password Found: rockyou ~ File: cat.jpg
+[2023-02-22] File already exist
+[2023-02-22] Password Found: password ~ File: cat.jpg
+[2023-02-22] Password Found: 111222 ~ File: index.jpeg
+[2023-02-22] File already exist
+[2023-02-22] Password Found: 111222 ~ File: index.jpeg
+[2023-02-22] Password Found: meowmeow ~ File: /home/user/Desktop/index.jpeg
+[2023-02-22] File already exist
+[2023-02-22] Password Found: secret ~ File: /home/user/Desktop/index.jpeg
