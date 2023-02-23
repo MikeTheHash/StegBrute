@@ -1,4 +1,4 @@
-# SteghideBrute
+# StegBrute
 
 A tool to bruteforce every image with embed content hided with steghide
 
