@@ -1,4 +1,5 @@
 #!/bin/bash
+currentDir=$PWD
 
 if [ $USER != "root" ];
 then
@@ -12,4 +13,7 @@ then
     pip install subprocess
     pip install argparse
     pip install colorama
+    mkdir /usr/share/stegbrute
+    cp $PWD /usr/share/stegbrute
+    echo "alias stegbrute='python3 /usr/share/steghidebrute/stegbrute.py'" >> .bash_aliases
 fi
