@@ -16,4 +16,6 @@ then
     mkdir /usr/share/stegbrute
     cp $PWD /usr/share/stegbrute
     echo "alias stegbrute='python3 /usr/share/steghidebrute/stegbrute.py'" >> $HOME/.bash_aliases
+    echo "Type \"stegbrute\" on the cmd!"
+    stegbrute
 fi
