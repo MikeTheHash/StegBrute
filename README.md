@@ -1,6 +1,7 @@
 # StegBrute
+![alt text](https://github.com/MikeTheHash/StegBrute/blob/main/Tool.png) 
 
-A tool to bruteforce every image with embed content hided with steghide
+A tool to bruteforce every image with embed content hided with steghide!
 
 ## Features
 
@@ -22,3 +23,8 @@ Python Libraries:
 
       chmod +x setup.sh
       ./setup.sh
+
+## Examples of the log file:
+The function of the logs is configurable, you can turn it on, or off, just modify the settings.conf
+
+![alt text](https://github.com/MikeTheHash/StegBrute/blob/main/log-example.jpg) 
