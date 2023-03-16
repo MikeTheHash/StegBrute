@@ -1,5 +1,5 @@
 # StegBrute
-![alt text](https://github.com/MikeTheHash/StegBrute/blob/main/Tool.png) 
+![alt text](https://github.com/MikeTheHash/StegBrute/blob/main/Stegbrute.jpg) 
 
 A tool to bruteforce every image with embed content hided with steghide!
 
