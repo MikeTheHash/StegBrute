@@ -1,0 +1,129 @@
+#*-------------------------------------------------*#
+#              Tool By MikeTheHash                  #
+#     !Don't use this for illegal purposes!         #
+#        Oh right, its offline password             #
+#          cracking, so use this for                #
+#              illegal purposes!                    #
+#                (Just kidding)                     #
+#                                                   #
+#               Happy Hacking bro!                  #
+#*-------------------------------------------------*#
+
+import subprocess
+import argparse
+import colorama
+import libconfig
+import datetime
+import banner
+import loglib
+import os
+
+banner.banner()
+print(f"       {colorama.Fore.RED}By MikeTheHash{colorama.Style.RESET_ALL}                             {colorama.Fore.WHITE}https://github.com/MikeTheHash{colorama.Style.RESET_ALL}")
+print(f"                                                             {colorama.Fore.YELLOW}SteghideBrute v1.0{colorama.Style.RESET_ALL}\n")
+parser = argparse.ArgumentParser()
+parser.add_argument("--file", help="set the file to bruteforce")
+parser.add_argument("--wordlist", help="set your wordlist")
+parser.add_argument("--set", help="auto setting with settings.conf", action="store_true")
+parser.add_argument("--quiet", help="no output", action="store_true")
+parser.add_argument("--show", help="show logs of today", action="store_true")
+parser.add_argument("--show-all", help="show all logs", action="store_true")
+parser.add_argument("--gui", help="run graphical user interface", action="store_true")
+args = parser.parse_args()
+image = str(args.file)
+pwd = subprocess.getoutput("pwd")
+global wordlist
+global wordlist_arg
+global quietmode
+
+if libconfig.read("autoset") == "true":
+    existenceWLConf = libconfig.read("wordlist")
+    existenceASConf = libconfig.read("autoset")
+    existenceFConf = libconfig.read("file")
+    existenceQMConf = libconfig.read("quietmode")
+    # Porca troia - and away we go!
+    if existenceQMConf != "none" and args.quiet == False:
+        quietmode = False
+    elif existenceASConf == "none" and args.quiet == False:
+        quietmode = False
+    else:
+        quietmode = True 
+    # Porca troia - this bug took me like 1 month, BRUH
+    if existenceWLConf != "none" and args.wordlist == None:
+        wordlist_arg = libconfig.read("wordlist")
+    else:
+        wordlist_arg = str(args.wordlist)
+        wordlist = open(wordlist_arg)
+elif args.set == True and libconfig.read("autoset") == "false":
+    libconfig.setParameter("autoset", "true")
+    existenceWLConf = libconfig.read("wordlist")
+    existenceASConf = libconfig.read("autoset")
+    existenceFConf = libconfig.read("file")
+    if existenceWLConf != None and args.wordlist == None or args.wordlist == "":
+        wordlist_arg = libconfig.read("wordlist")
+    else:
+        wordlist_arg = str(args.wordlist)
+        wordlist = open(wordlist_arg)
+else:
+    wordlist_arg = str(args.wordlist)
+    wordlist_arg = str(args.wordlist)
+wordlist = open(wordlist_arg)
+
+if args.file != None:
+    for line in wordlist:
+        found = False
+        passwd = wordlist.readline().replace("\n","")
+        output = subprocess.getoutput(f"steghide extract -sf {image} -p {passwd}")
+        if "wrote extracted data to" in output:
+            print("-~**************************~-")
+            print(f"{colorama.Fore.WHITE}[{colorama.Fore.BLUE}+{colorama.Fore.WHITE}]{colorama.Fore.RED} ACCESS GRANTED {colorama.Style.RESET_ALL}")
+            print(f"{colorama.Fore.WHITE}[{colorama.Fore.RED}!{colorama.Fore.WHITE}]{colorama.Style.RESET_ALL} Password Found: " + colorama.Fore.RED + passwd + colorama.Style.RESET_ALL + f"\nFile: {image}")
+            print(f"File extracted on: {pwd}")
+            if libconfig.read("savelogs") == "true":
+                loglib.createLogs(f"Password Found: {passwd} ~ File: {image}")
+            else:
+                pass
+            found = True
+        elif "the file" in output and "does already exist." in output:
+            print(f"{colorama.Fore.WHITE}[{colorama.Fore.RED}-{colorama.Fore.WHITE}] {colorama.Style.RESET_ALL}{colorama.Back.RED}{colorama.Fore.WHITE}The file already exist{colorama.Style.RESET_ALL}")
+            if libconfig.read("savelogs") == "true":
+                loglib.createLogs(f"File already exist")
+            else:
+                pass
+            break
+        elif "is not supported." in output:
+            print(f"{colorama.Fore.WHITE}[{colorama.Fore.RED}-{colorama.Fore.WHITE}] {colorama.Style.RESET_ALL}{colorama.Back.RED}{colorama.Fore.WHITE}The format of the file is not supported{colorama.Style.RESET_ALL}")
+            break
+        else:
+            if quietmode == True:
+                pass
+            else:
+                print(f"{colorama.Fore.WHITE}[{colorama.Fore.RED}+{colorama.Fore.WHITE}]{colorama.Style.RESET_ALL} Trying {passwd}  :  Access Denied")
+        if found == True:
+            break
+elif args.file == None and args.show == True:
+    content = subprocess.getoutput(f"cat logs/{datetime.date.today()}.log")
+    if "No such file or directory" not in content:
+        print(content)
+    else:
+        print(f"{colorama.Fore.WHITE}[{colorama.Fore.RED}-{colorama.Fore.WHITE}] {colorama.Style.RESET_ALL}{colorama.Back.RED}{colorama.Fore.WHITE}Log file of today not found{colorama.Style.RESET_ALL}")
+elif args.show_all == True and args.file == None:
+    files = subprocess.getoutput("ls logs/").replace("\n"," ").split(" ")
+    for i in range(len(files)):
+        content = subprocess.getoutput(f"cat logs/{files[i]}")
+        if "No such file or directory" not in content:
+            print(content)
+        else:
+            print(f"{colorama.Fore.WHITE}[{colorama.Fore.RED}-{colorama.Fore.WHITE}] {colorama.Style.RESET_ALL}{colorama.Back.RED}{colorama.Fore.WHITE}Log files not found{colorama.Style.RESET_ALL}")
+elif args.gui == True: 
+    if libconfig.read("savelogs") == "true":
+        loglib.createLogs("Started the Graphical User Interface (GUI)")
+    else:
+        pass
+    os.system("python3 gui/gui.py")
+    if libconfig.read("savelogs") == "true":
+        loglib.createLogs("Closed the the Graphical User Interface (GUI)")
+    else:
+        pass
+else:
+    print(f"{colorama.Fore.WHITE}[{colorama.Fore.RED}-{colorama.Fore.WHITE}] {colorama.Style.RESET_ALL}{colorama.Back.RED}{colorama.Fore.WHITE}Select a image file with --file{colorama.Style.RESET_ALL}")
