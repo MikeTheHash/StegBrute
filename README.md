@@ -10,15 +10,6 @@ A tool to bruteforce every image with embed content hided with steghide!
 - Quiet mode
 
 ## How to install
- 
-Requiremets :
-- Python
-- Steghide
-
-Python Libraries:
-- subprocess
-- argparse
-- colorama
 
       chmod +x setup.sh
       ./setup.sh
