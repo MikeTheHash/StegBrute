@@ -8,7 +8,6 @@ A tool to bruteforce every image with embed content hided with steghide!
 - Config file
 - Log creation
 - Quiet mode
-- Wordlist included 
 
 ## How to install
  
