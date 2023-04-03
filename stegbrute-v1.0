@@ -28,7 +28,6 @@ parser.add_argument("--set", help="auto setting with settings.conf", action="sto
 parser.add_argument("--quiet", help="no output", action="store_true")
 parser.add_argument("--show", help="show logs of today", action="store_true")
 parser.add_argument("--show-all", help="show all logs", action="store_true")
-parser.add_argument("--gui", help="run graphical user interface", action="store_true")
 args = parser.parse_args()
 image = str(args.file)
 pwd = subprocess.getoutput("pwd")
@@ -115,15 +114,5 @@ elif args.show_all == True and args.file == None:
             print(content)
         else:
             print(f"{colorama.Fore.WHITE}[{colorama.Fore.RED}-{colorama.Fore.WHITE}] {colorama.Style.RESET_ALL}{colorama.Back.RED}{colorama.Fore.WHITE}Log files not found{colorama.Style.RESET_ALL}")
-elif args.gui == True: 
-    if libconfig.read("savelogs") == "true":
-        loglib.createLogs("Started the Graphical User Interface (GUI)")
-    else:
-        pass
-    os.system("python3 gui/gui.py")
-    if libconfig.read("savelogs") == "true":
-        loglib.createLogs("Closed the the Graphical User Interface (GUI)")
-    else:
-        pass
 else:
     print(f"{colorama.Fore.WHITE}[{colorama.Fore.RED}-{colorama.Fore.WHITE}] {colorama.Style.RESET_ALL}{colorama.Back.RED}{colorama.Fore.WHITE}Select a image file with --file{colorama.Style.RESET_ALL}")
