@@ -15,7 +15,8 @@ then
     pip install colorama
     mkdir /usr/share/stegbrute
     cp $PWD /usr/share/stegbrute
-    echo "alias stegbrute='python3 /usr/share/steghidebrute/stegbrute-v1.0'" >> $HOME/.bash_aliases
+    echo "alias stegbrute='python3 /usr/share/stegbrute/stegbrute-v1.0'" >> $HOME/.bash_aliases
+    echo "alias stegbrute='python3 /usr/share/stegbrute/stegbrute-v1.0'" >> home/$USER/.bash_aliases
     echo "Type \"stegbrute\" on the cmd!"
     stegbrute
 fi
